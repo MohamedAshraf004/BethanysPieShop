@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BethanysPieShop.Context;
 using BethanysPieShop.Models;
+using BethanysPieShop.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -30,10 +31,10 @@ namespace BethanysPieShop
             {
                 options.UseSqlServer(Configuration.GetConnectionString("BethanysPieShopConnectionString"));
             });
-            services.AddControllersWithViews();//services.AddMvc(); would also work still
+            services.AddControllersWithViews();//services.AddMvc(); also work still
 
-            services.AddScoped<ICategoryRepository, MockCategoryRepository>();
-            services.AddScoped<IPieRepository, MockPieRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IPieRepository, PieRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,7 +54,7 @@ namespace BethanysPieShop
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Pie}/{action=List}/{id?}");
             });
         }
     }
