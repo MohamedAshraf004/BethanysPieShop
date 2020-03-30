@@ -55,6 +55,8 @@ namespace BethanysPieShop
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Pie}/{action=List}/{id?}");
+                //endpoints.MapControllerRoute(name: "default",
+                //    pattern: "{controller=home}/{action=index}/{id?}");// multiple route is execute sequntially
             });
         }
     }
