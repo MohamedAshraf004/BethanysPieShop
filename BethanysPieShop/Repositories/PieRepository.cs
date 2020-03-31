@@ -1,5 +1,5 @@
 ﻿using BethanysPieShop.Contexts;
-using BethanysPieShop.Models;
+using BethanysPieShop.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

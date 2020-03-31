@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BethanysPieShop.Models;
+using BethanysPieShop.Repositories;
 
 namespace BethanysPieShop.ViewModels
 {

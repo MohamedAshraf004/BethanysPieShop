@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace BethanysPieShop.Repositories
 {
-    public interface ICategoryRepository
+    public interface IOrderRepository
     {
-        IEnumerable<Category> AllCategories { get; }
+        void CreateOrder(Order order);
     }
 }

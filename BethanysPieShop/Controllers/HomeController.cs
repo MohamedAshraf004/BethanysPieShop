@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BethanysPieShop.Models;
+using BethanysPieShop.Repositories;
 using BethanysPieShop.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BethanysPieShop.Contexts;
-using BethanysPieShop.Models;
+using BethanysPieShop.Repositories;
 using BethanysPieShop.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -35,6 +35,7 @@ namespace BethanysPieShop
 
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IPieRepository, PieRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
 
             //for shopping cart
             services.AddScoped<ShoppingCart>(sp => ShoppingCart.GetCart(sp));

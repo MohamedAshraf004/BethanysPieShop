@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BethanysPieShop.Models
+namespace BethanysPieShop.Repositories
 {
     public class Pie
     {
