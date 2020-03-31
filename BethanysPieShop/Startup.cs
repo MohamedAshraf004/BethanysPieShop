@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using BethanysPieShop.Contexts;
 using BethanysPieShop.Repositories;
-using BethanysPieShop.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,8 +31,9 @@ namespace BethanysPieShop
             {
                 options.UseSqlServer(Configuration.GetConnectionString("BethanysPieShopConnectionString"));
             });
+            services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<AppDbContext>();
             services.AddControllersWithViews();//services.AddMvc(); also work still
-
+            services.AddRazorPages();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IPieRepository, PieRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
@@ -55,12 +56,14 @@ namespace BethanysPieShop
             app.UseStaticFiles();
             app.UseSession();
             app.UseRouting();
-
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Pie}/{action=List}/{id?}");
+                endpoints.MapRazorPages();
                 //endpoints.MapControllerRoute(name: "default",
                 //    pattern: "{controller=home}/{action=index}/{id?}");// multiple route is execute sequntially
             });
