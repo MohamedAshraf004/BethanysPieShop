@@ -20,9 +20,19 @@ namespace BethanysPieShop.Repositories
 
         public IEnumerable<Pie> PiesOfTheWeek { get; }
 
+        public void CreatePie(Pie pie)
+        {
+            throw new NotImplementedException();
+        }
+
         public Pie GetPieById(int pieId)
         {
             return AllPies.FirstOrDefault(p => p.PieId == pieId);
+        }
+
+        public void UpdatePie(Pie pie)
+        {
+            throw new NotImplementedException();
         }
     }
 }

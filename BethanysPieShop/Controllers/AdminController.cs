@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BethanysPieShop.Auth;
 using BethanysPieShop.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -284,5 +285,37 @@ namespace BethanysPieShop.Controllers
             return View(userRoleViewModel);
         }
 
+        public async Task<IActionResult> ManageClaimsForUser(string userId)
+        {
+            var user =await  _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+                return RedirectToAction("UserManagement", _userManager.Users);
+            var claimsManagementViewModel = new ClaimsManagementViewModel
+            { UserId = userId, AllClaimsList = BethanysPieShopClaimTypes.ClaimsList };
+
+            return View(claimsManagementViewModel);
+        }
+        //[HttpPost]
+        //public async Task<IActionResult> ManageClaimsForUser(ClaimsManagementViewModel claimsManagementViewModel)
+        //{
+        //    var user = await _userManager.FindByIdAsync(claimsManagementViewModel.UserId);
+        //    var userClaims = await _userManager.GetClaimsAsync(user);
+        //    if (user == null)
+        //        return RedirectToAction("UserManagement", _userManager.Users);
+
+        //    IdentityUserClaim<string> claim =
+        //        new IdentityUserClaim<string> { ClaimType = claimsManagementViewModel.ClaimId, ClaimValue = claimsManagementViewModel.ClaimId };
+           
+        //    user.Claims.Add(claim);
+        //    var result = await _userManager.UpdateAsync(user);
+
+        //    if (result.Succeeded)
+        //        return RedirectToAction("UserManagement", _userManager.Users);
+
+        //    ModelState.AddModelError("", "User not updated, something went wrong.");
+
+        //    return View(claimsManagementViewModel);
+        //}
     }
 }

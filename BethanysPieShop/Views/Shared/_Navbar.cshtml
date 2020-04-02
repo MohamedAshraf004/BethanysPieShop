@@ -17,10 +17,12 @@
                     <li><a asp-controller="Contact" asp-action="Index">Contact</a></li>
                     @await Component.InvokeAsync("ShoppingCartSummary")
                     <partial name="_LoginPartial" />
-                    @if (_singInManager.IsSignedIn(User) &&  User.IsInRole("Administrators"))
+                    @if (_singInManager.IsSignedIn(User) && User.IsInRole("Administrators"))
                     {
                         <li><a asp-controller="Admin" asp-action="UserManagement">User Management</a> </li>
                         <li><a asp-controller="Admin" asp-action="RoleManagement">Role Management</a> </li>
+                        <li> <a asp-controller="PieManagement" asp-action="Index">Pie Management</a>  </li>
+
                     }
                 </ul>
             </div>

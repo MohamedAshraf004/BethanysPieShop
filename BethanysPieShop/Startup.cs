@@ -42,6 +42,15 @@ namespace BethanysPieShop
             }).AddEntityFrameworkStores<AppDbContext>();
             services.AddControllersWithViews();//services.AddMvc(); also still work
             services.AddRazorPages();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdministraorsOnly", policy => policy.RequireRole("Administrator"));
+                options.AddPolicy("AddPie", policy => policy.RequireRole("Add pie", "Add Pie"));
+                options.AddPolicy("DeletePie", policy => policy.RequireRole("Delete Pie", "Delete Pie"));
+            });
+
+
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IPieRepository, PieRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();

@@ -53,3 +53,26 @@
     </div>
 </form>
 
+
+<h3>Claims for this user</h3>
+@*@if (Model.UserClaims.Count() ==0)
+{
+    <h4> No claims</h4>
+}
+else
+{
+    <ul>
+        @foreach (var claim in Model.UserClaims)
+        {
+            <li>
+                @claim
+            </li>
+        }
+    </ul>
+
+}*@
+
+
+
+
+<a asp-action="ManageClaimsForUser" asp-route-userId="@Model.Id" class="btn btn-primary">Manage claims for this user</a>

@@ -20,9 +20,23 @@ namespace BethanysPieShop.Repositories
 
         public IEnumerable<Pie> PiesOfTheWeek => _dbContext.Pies.Include(c => c.Category).Where(p => p.IsPieOfTheWeek);
 
+        public void UpdatePie(Pie pie)
+        {
+            _dbContext.Pies.Update(pie);
+            _dbContext.SaveChanges();
+        }
+
+        public void CreatePie(Pie pie)
+        {
+            _dbContext.Pies.Add(pie);
+            _dbContext.SaveChanges();
+        }
+
         public Pie GetPieById(int pieId)
         {
            return _dbContext.Pies.FirstOrDefault(p => p.PieId == pieId);
         }
+
+   
     }
 }
