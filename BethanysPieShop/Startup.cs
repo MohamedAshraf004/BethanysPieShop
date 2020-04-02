@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BethanysPieShop.Auth;
 using BethanysPieShop.Contexts;
 using BethanysPieShop.Repositories;
 using Microsoft.AspNetCore.Builder;
@@ -31,7 +32,7 @@ namespace BethanysPieShop
             {
                 options.UseSqlServer(Configuration.GetConnectionString("BethanysPieShopConnectionString"));
             });
-            services.AddIdentity<IdentityUser,IdentityRole>(options=>
+            services.AddIdentity<ApplicationUser, IdentityRole>(options=>
             {
                 options.Password.RequiredLength = 8;
                 options.Password.RequireNonAlphanumeric = true;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BethanysPieShop.Auth;
 using BethanysPieShop.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,9 +13,9 @@ namespace BethanysPieShop.Controllers
 {
     public class AdminController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public AdminController(UserManager<IdentityUser> userManager)
+        public AdminController(UserManager<ApplicationUser> userManager)
         {
             this._userManager = userManager;
         }
@@ -38,10 +39,13 @@ namespace BethanysPieShop.Controllers
         public async Task<IActionResult> AddUser(AddUserViewModel userViewModel)
         {
             if (!ModelState.IsValid) return View(userViewModel);
-            var user = new IdentityUser()
+            var user = new ApplicationUser()
             {
                     UserName = userViewModel.UserName,
-                    Email = userViewModel.Email
+                    Email = userViewModel.Email,
+                    City=userViewModel.City,
+                    Country=userViewModel.Country,
+                    Birthdate=userViewModel.Birthdate
             };
             IdentityResult result =await  _userManager.CreateAsync(user, userViewModel.Password);
 
@@ -64,16 +68,23 @@ namespace BethanysPieShop.Controllers
             {
                 return RedirectToAction(nameof(UserManagement), _userManager.Users);
             }
-            return View(user);
+            var userViewModel = new EditUserViewModel() { Id = user.Id, Email = user.Email, UserName = user.UserName, 
+                                            Birthdate = user.Birthdate, City = user.City, Country = user.Country };
+
+            return View(userViewModel);
         }
         [HttpPost]
-        public async Task<IActionResult> EditUser(string id,string Email ,string UserName)
+        public async Task<IActionResult> EditUser(EditUserViewModel userViewModel)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            
+            var user = await _userManager.FindByIdAsync(userViewModel.Id);
             if (user!=null)
             {
-                user.Email = Email;
-                user.UserName = UserName;
+                user.Email = userViewModel.Email;
+                user.UserName = userViewModel.UserName;
+                user.Country = userViewModel.Country;
+                user.City = userViewModel.City;
+                user.Birthdate = userViewModel.Birthdate;
                 IdentityResult result = await _userManager.UpdateAsync(user);
                 if (result.Succeeded)
                 {

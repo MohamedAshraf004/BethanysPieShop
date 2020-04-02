@@ -1,4 +1,5 @@
-﻿using BethanysPieShop.Repositories;
+﻿using BethanysPieShop.Auth;
+using BethanysPieShop.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BethanysPieShop.Contexts
 {
-    public class AppDbContext:IdentityDbContext<IdentityUser>
+    public class AppDbContext:IdentityDbContext<ApplicationUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options):base(options)
         {

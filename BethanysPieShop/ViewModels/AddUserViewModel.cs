@@ -25,6 +25,11 @@ namespace BethanysPieShop.ViewModels
         [DataType(DataType.Password),Required,Compare("Password",ErrorMessage ="Confirmation password is fault")]
         public string ConfirmPassword { get; set; }
 
+        public DateTime Birthdate { get; set; }
+        public string City { get; set; }
+        public string Country { get; set; }
+
+
 
     }
 }
