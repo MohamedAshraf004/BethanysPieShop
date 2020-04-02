@@ -31,8 +31,15 @@ namespace BethanysPieShop
             {
                 options.UseSqlServer(Configuration.GetConnectionString("BethanysPieShopConnectionString"));
             });
-            services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<AppDbContext>();
-            services.AddControllersWithViews();//services.AddMvc(); also work still
+            services.AddIdentity<IdentityUser,IdentityRole>(options=>
+            {
+                options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireUppercase = true;
+                options.User.RequireUniqueEmail = true;
+
+            }).AddEntityFrameworkStores<AppDbContext>();
+            services.AddControllersWithViews();//services.AddMvc(); also still work
             services.AddRazorPages();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IPieRepository, PieRepository>();
@@ -55,7 +62,7 @@ namespace BethanysPieShop
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSession();
-            app.UseRouting();
+            app.UseRouting();            
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
