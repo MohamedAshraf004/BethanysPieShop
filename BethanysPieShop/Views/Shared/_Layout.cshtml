@@ -44,6 +44,7 @@
             <div class="col-md-9">
                 @RenderBody()
             </div>
+            @await Component.InvokeAsync("SystemStatusPage")
         </div>
     </div>
     @RenderSection("Scripts",required:false)
