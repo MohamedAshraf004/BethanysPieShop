@@ -11,6 +11,24 @@
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.js"></script>
     <link href="~/Content/site.css" rel="stylesheet" />
+
+    @*
+        <link rel="stylesheet" href="//ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="hidden"
+              asp-fallback-test-property="visibility"
+              asp-fallback-test-value="hidden" /> for css
+        ------------------------------------------------
+        <link href="~/Content/site.css" rel="stylesheet" />
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script asp-src-include="lib/jquery/dist/jquery.js"></script>
+        <script asp-src-include="lib/jquery-validation/dist/jquery.validate.min.js"></script>
+        <script asp-src-include="lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+        <script asp-src-include="Scripts/**/*.js"
+                asp-src-exclude="Scripts/TempScripts/*.js"></script> for js
+        ------------------------------------------------
+    *@
+
 </head>
 <body>
     <div class="container">
