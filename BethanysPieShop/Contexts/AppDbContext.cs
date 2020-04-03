@@ -1,4 +1,5 @@
 ﻿using BethanysPieShop.Auth;
+using BethanysPieShop.Models;
 using BethanysPieShop.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -21,6 +22,7 @@ namespace BethanysPieShop.Contexts
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<PieReview> PieReviews { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

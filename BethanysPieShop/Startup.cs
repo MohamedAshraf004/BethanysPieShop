@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -48,12 +49,27 @@ namespace BethanysPieShop
                 options.AddPolicy("AdministraorsOnly", policy => policy.RequireRole("Administrator"));
                 options.AddPolicy("AddPie", policy => policy.RequireRole("Add pie", "Add Pie"));
                 options.AddPolicy("DeletePie", policy => policy.RequireRole("Delete Pie", "Delete Pie"));
+                options.AddPolicy("MinimumOrderAge", policy => policy.Requirements.Add(new MinimumOrderAgeRequirement(18)));
+
             });
 
-
+            //services.AddAuthentication().AddGoogle(options =>
+            //{
+            //    options.ClientId = "";
+            //    options.ClientSecret = "";
+            //});
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IPieRepository, PieRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IPieReviewRepository, PieReviewRepository>();
+
+            ////AntiforgeryToken
+            ////specify options for the anti forgery here
+            //services.AddAntiforgery(opts => { opts.SuppressXFrameOptionsHeader = true; });
+
+            ////anti forgery as global filter
+            //services.AddMvc(options =>
+            //    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute()));
 
             //for shopping cart
             services.AddScoped<ShoppingCart>(sp => ShoppingCart.GetCart(sp));

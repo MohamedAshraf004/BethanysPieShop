@@ -23,6 +23,10 @@ namespace BethanysPieShop.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
         }
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
 
         [AllowAnonymous]
         public IActionResult Login(string returnUrl)
