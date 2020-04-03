@@ -34,7 +34,7 @@ namespace BethanysPieShop.Repositories
 
         public Pie GetPieById(int pieId)
         {
-           return _dbContext.Pies.FirstOrDefault(p => p.PieId == pieId);
+           return _dbContext.Pies.Include(r=>r.PieReviews).FirstOrDefault(p => p.PieId == pieId);
         }
 
    

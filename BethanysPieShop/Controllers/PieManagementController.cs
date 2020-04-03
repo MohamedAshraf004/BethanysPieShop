@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BethanysPieShop.Repositories;
 using BethanysPieShop.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -41,6 +42,10 @@ namespace BethanysPieShop.Controllers
         [HttpPost]
         public IActionResult AddPie(PieEditViewModel pieEditViewModel)
         {
+            if (ModelState.GetValidationState("Pie.Price")== ModelValidationState.Valid &&pieEditViewModel.Pie.Price>0)
+            {
+                ModelState.AddModelError(nameof(pieEditViewModel.Pie.Price), "invalid price");
+            }
             if (ModelState.IsValid)
             {
                 _pieRepository.CreatePie(pieEditViewModel.Pie);
@@ -69,12 +74,27 @@ namespace BethanysPieShop.Controllers
         public IActionResult EditPie(PieEditViewModel pieEditViewModel)
         {
             pieEditViewModel.Pie.CategoryId = pieEditViewModel.CategoryId;
-
+            if (ModelState.GetValidationState("Pie.Price") == ModelValidationState.Valid && pieEditViewModel.Pie.Price < 0)
+            {
+                ModelState.AddModelError(nameof(pieEditViewModel.Pie.Price), "invalid price");
+            }
             if (ModelState.IsValid)
             {
                 _pieRepository.UpdatePie(pieEditViewModel.Pie);
                 return RedirectToAction("Index");
             }
+
+            var categories = _categoryRepository.AllCategories;
+
+             pieEditViewModel = new PieEditViewModel
+            {
+                Categories = categories.Select(c => new SelectListItem() { Text = c.CategoryName, Value = c.CategoryId.ToString() }).ToList(),
+                
+                CategoryId = pieEditViewModel.Pie.CategoryId
+            };
+            var item = pieEditViewModel.Categories.FirstOrDefault(c => c.Value == pieEditViewModel.CategoryId.ToString());
+            item.Selected = true;
+
             return View(pieEditViewModel);
         }
 
@@ -83,5 +103,19 @@ namespace BethanysPieShop.Controllers
         {
             return View();
         }
+
+        [AcceptVerbs("Get", "Post")]
+        public JsonResult CheckPieNameIfAlreadyExists([Bind(Prefix = "Pie.Name")] string name)
+        {
+            var pie = _pieRepository.AllPies.Where(p => p.Name == name).FirstOrDefault();
+            if (pie == null)
+                return Json(true);
+            return Json("Pie name is already taken.");
+          //  return pie == null ? Json(true) : Json("Pie name is already taken.");
+
+        }
+
+
+
     }
 }

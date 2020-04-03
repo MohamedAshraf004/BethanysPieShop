@@ -18,7 +18,9 @@ namespace BethanysPieShop.Repositories
 
         public void AddPieReview(PieReview pieReview)
         {
+           var pie= _appDbContext.Pies.FirstOrDefault(p=>p.PieId== pieReview.Pie.PieId);
             _appDbContext.PieReviews.Add(pieReview);
+            pie.PieReviews.Add(pieReview);
             _appDbContext.SaveChanges();
         }
 
